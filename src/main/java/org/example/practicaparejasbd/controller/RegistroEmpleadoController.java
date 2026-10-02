@@ -196,33 +196,34 @@ public class RegistroEmpleadoController {
     private boolean validarFormulario() {
 
         if (txtNombres.getText().isEmpty() || txtApellidos.getText().isEmpty() || txtCedula.getText().isEmpty() || txtCorreo.getText().isEmpty()
-                || cmbDepartamento.getValue() == null || txtTelefono.getText().isEmpty() || txtSalario.getText().isEmpty() || cmbCargo.getValue() == null || cmbEstado.getValue() == null)
+                || txtTelefono.getText().isEmpty() || txtSalario.getText().isEmpty() || cmbCargo.getValue() == null || cmbDepartamento.getValue() == null || cmbEstado.getValue() == null || dtpFechaContratacion.getValue() == null)
         {
 
             mostrarAlerta(
                     Alert.AlertType.WARNING,
                     "Registro Incompleto",
-                    "Datos Faltantes del registro",
-                    "Le faltan campos por llenar.\nPor favor, verifique de nuevo."
+                    "Datos faltantes",
+                    "Complete todos los campos."
             );
-            try {
-                Double.parseDouble(txtSalario.getText());
-            } catch (NumberFormatException e) {
-                mostrarAlerta(
-                        Alert.AlertType.WARNING,
-                        "Dato inválido",
-                        "Salario incorrecto",
-                        "El salario solo puede contener números."
-                );
-                return false;
-            }
+
+            return false;
+        }
+
+        try {
+            Double.parseDouble(txtSalario.getText());
+        } catch (NumberFormatException e) {
+            mostrarAlerta(
+                    Alert.AlertType.WARNING,
+                    "Dato inválido",
+                    "Salario incorrecto",
+                    "El salario solo puede contener números."
+            );
 
             return false;
         }
 
         return true;
     }
-
 
 }
 
