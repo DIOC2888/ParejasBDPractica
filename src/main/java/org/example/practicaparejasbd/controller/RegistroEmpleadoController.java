@@ -205,6 +205,17 @@ public class RegistroEmpleadoController {
                     "Datos Faltantes del registro",
                     "Le faltan campos por llenar.\nPor favor, verifique de nuevo."
             );
+            try {
+                Double.parseDouble(txtSalario.getText());
+            } catch (NumberFormatException e) {
+                mostrarAlerta(
+                        Alert.AlertType.WARNING,
+                        "Dato inválido",
+                        "Salario incorrecto",
+                        "El salario solo puede contener números."
+                );
+                return false;
+            }
 
             return false;
         }
