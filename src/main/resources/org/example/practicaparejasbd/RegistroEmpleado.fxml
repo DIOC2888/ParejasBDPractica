@@ -57,7 +57,7 @@
             <ComboBox fx:id="cmbEstado" prefWidth="150.0" promptText="Estado" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
-      <TableView layoutX="22.0" layoutY="400.0" prefHeight="200.0" prefWidth="930.0">
+      <TableView fx:id="tblEmpleado" layoutX="22.0" layoutY="400.0" prefHeight="200.0" prefWidth="930.0">
         <columns>
           <TableColumn fx:id="colID" prefWidth="43.20001220703125" text="ID" />
           <TableColumn fx:id="colNombres" prefWidth="107.1999740600586" text="Nombres" />
