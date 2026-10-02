@@ -103,7 +103,10 @@ public class RegistroEmpleadoController {
 
 
     public void clickGuardar(ActionEvent actionEvent) {
-
+    if (!validarFormulario())
+    {
+        return;
+    }
 
         String sql = "INSERT INTO empleado (nombres, apellidos, cedula, correo, " +
                 "telefono, cargo, departamento, salario, fechaContratacion, estado) " +
@@ -131,6 +134,16 @@ public class RegistroEmpleadoController {
     }
 
     public void clickLimpiar(ActionEvent actionEvent) {
+        txtNombres.clear();
+        txtApellidos.clear();
+        txtCedula.clear();
+        txtCorreo.clear();
+        txtTelefono.clear();
+        txtSalario.clear();
+        cmbCargo.setValue(null);
+        cmbDepartamento.setValue(null);
+        cmbEstado.setValue(null);
+        dtpFechaContratacion.setValue(null);
     }
 
     public void clickCargar(ActionEvent actionEvent) {
@@ -157,6 +170,12 @@ public class RegistroEmpleadoController {
                 empleado.setEstado(resultSet.getString("estado"));
                 this.empleado.add(empleado);
             }
+            mostrarAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Carga de Datos",
+                    "Datos Cargados Correctamente",
+                    "Se han cargado los datos de la base de datos correctamente."
+            );
         }catch (SQLException ex){
             ex.printStackTrace();
         }
@@ -169,6 +188,7 @@ public class RegistroEmpleadoController {
         alert.setTitle(titulo);
         alert.setHeaderText(encabezado);
         alert.setContentText(mensaje);
+        alert.showAndWait();
 
     }
 
