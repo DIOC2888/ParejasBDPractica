@@ -5,10 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.example.practicaparejasbd.connection.DatabaseConnection;
 import org.example.practicaparejasbd.model.Empleado;
 
+import java.sql.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class RegistroEmpleadoController {
 
@@ -25,7 +26,7 @@ public class RegistroEmpleadoController {
     @FXML
     private ComboBox<String> cmbCargo;
     @FXML
-    private TextField txtDepartamento;
+    private ComboBox<String> cmbDepartamento;
     @FXML
     private TextField txtSalario;
     @FXML
@@ -77,6 +78,12 @@ public class RegistroEmpleadoController {
         cmbEstado.getItems().addAll(
                 "Activo",
                 "Inactivo");
+        cmbDepartamento.getItems().addAll(
+                "Recursos Humanos",
+                "Finanzas",
+                "Tecnología",
+                "Marketing"
+        );
     }
 
 
@@ -96,21 +103,30 @@ public class RegistroEmpleadoController {
 
 
     public void clickGuardar(ActionEvent actionEvent) {
-            Empleado nuevoEmpleado = new Empleado(
-                    0,
-                    txtNombres.getText(),
-                    txtApellidos.getText(),
-                    txtCedula.getText(),
-                    txtCorreo.getText(),
-                    txtTelefono.getText(),
-                    cmbCargo.getValue(),
-                    txtDepartamento.getText(),
-                    Double.parseDouble(txtSalario.getText()),
-                    dtpFechaContratacion.getValue(),
-                    cmbEstado.getValue()
-            );
 
-            empleado.add(nuevoEmpleado);
+
+        String sql = "INSERT INTO empleado (nombres, apellidos, cedula, correo, " +
+                "telefono, cargo, departamento, salario, fechaContratacion, estado) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+        ){
+            statement.setString(1, txtNombres.getText());
+            statement.setString(2, txtApellidos.getText());
+            statement.setString(3, txtCedula.getText());
+            statement.setString(4, txtCorreo.getText());
+            statement.setString(5, txtTelefono.getText());
+            statement.setString(6, cmbCargo.getValue());
+            statement.setString(7, cmbDepartamento.getValue());
+            statement.setDouble(8, Double.parseDouble(txtSalario.getText()));
+            statement.setDate(9, Date.valueOf(dtpFechaContratacion.getValue()));
+            statement.setString(10, cmbEstado.getValue());
+            statement.execute();
+
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
 
     }
 
@@ -118,5 +134,33 @@ public class RegistroEmpleadoController {
     }
 
     public void clickCargar(ActionEvent actionEvent) {
+        empleado.clear();
+        String sql = "SELECT * FROM empleado";
+
+        try(
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+        ){
+            while(resultSet.next()){
+                Empleado empleado = new Empleado();
+                empleado.setId(resultSet.getInt("id"));
+                empleado.setNombres(resultSet.getString("nombres"));
+                empleado.setApellidos(resultSet.getString("apellidos"));
+                empleado.setCedula(resultSet.getString("cedula"));
+                empleado.setCorreo(resultSet.getString("correo"));
+                empleado.setTelefono(resultSet.getString("telefono"));
+                empleado.setCargo(resultSet.getString("cargo"));
+                empleado.setDepartamento(resultSet.getString("departamento"));
+                empleado.setSalario(resultSet.getDouble("salario"));
+                empleado.setFechaContratacion(resultSet.getDate("fechaContratacion").toLocalDate());
+                empleado.setEstado(resultSet.getString("estado"));
+                this.empleado.add(empleado);
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
     }
 }
+
+
