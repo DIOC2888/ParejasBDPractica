@@ -33,12 +33,6 @@ public class RegistroEmpleadoController {
     private DatePicker dtpFechaContratacion;
     @FXML
     private ComboBox<String> cmbEstado;
-    @FXML
-    private Button btnGuardar;
-    @FXML
-    private Button btnLimpiar;
-    @FXML
-    private Button btnCargar;
 
     @FXML
     private TableView<Empleado> tblEmpleado;
@@ -225,6 +219,178 @@ public class RegistroEmpleadoController {
         return true;
     }
 
+
+    public void clickConsulta1(ActionEvent actionEvent) {
+        empleado.clear();
+        String sql = "SELECT * FROM empleado WHERE estado = 'Activo'";
+        try(
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+        ){
+            while(resultSet.next()){
+                Empleado empleado = new Empleado();
+                empleado.setId(resultSet.getInt("id"));
+                empleado.setNombres(resultSet.getString("nombres"));
+                empleado.setApellidos(resultSet.getString("apellidos"));
+                empleado.setCedula(resultSet.getString("cedula"));
+                empleado.setCorreo(resultSet.getString("correo"));
+                empleado.setTelefono(resultSet.getString("telefono"));
+                empleado.setCargo(resultSet.getString("cargo"));
+                empleado.setDepartamento(resultSet.getString("departamento"));
+                empleado.setSalario(resultSet.getDouble("salario"));
+                empleado.setFechaContratacion(resultSet.getDate("fechaContratacion").toLocalDate());
+                empleado.setEstado(resultSet.getString("estado"));
+                this.empleado.add(empleado);
+            }
+            mostrarAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Carga de Datos",
+                    "Datos Cargados Correctamente",
+                    "Se han cargado los datos de la base de datos correctamente."
+            );
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void clickConsulta2(ActionEvent actionEvent) {
+        empleado.clear();
+        String sql = "SELECT * FROM empleado WHERE departamento = 'Tecnologia'";
+        try(
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+        ){
+            while(resultSet.next()){
+                Empleado empleado = new Empleado();
+                empleado.setId(resultSet.getInt("id"));
+                empleado.setNombres(resultSet.getString("nombres"));
+                empleado.setApellidos(resultSet.getString("apellidos"));
+                empleado.setCedula(resultSet.getString("cedula"));
+                empleado.setCorreo(resultSet.getString("correo"));
+                empleado.setTelefono(resultSet.getString("telefono"));
+                empleado.setCargo(resultSet.getString("cargo"));
+                empleado.setDepartamento(resultSet.getString("departamento"));
+                empleado.setSalario(resultSet.getDouble("salario"));
+                empleado.setFechaContratacion(resultSet.getDate("fechaContratacion").toLocalDate());
+                empleado.setEstado(resultSet.getString("estado"));
+                this.empleado.add(empleado);
+            }
+            mostrarAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Carga de Datos",
+                    "Datos Cargados Correctamente",
+                    "Se han cargado los datos de la base de datos correctamente."
+            );
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void clickConsulta3(ActionEvent actionEvent) {
+        empleado.clear();
+        String sql = "SELECT * FROM empleado WHERE salario > 55000";
+        try(
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+        ){
+            while(resultSet.next()){
+                Empleado empleado = new Empleado();
+                empleado.setId(resultSet.getInt("id"));
+                empleado.setNombres(resultSet.getString("nombres"));
+                empleado.setApellidos(resultSet.getString("apellidos"));
+                empleado.setCedula(resultSet.getString("cedula"));
+                empleado.setCorreo(resultSet.getString("correo"));
+                empleado.setTelefono(resultSet.getString("telefono"));
+                empleado.setCargo(resultSet.getString("cargo"));
+                empleado.setDepartamento(resultSet.getString("departamento"));
+                empleado.setSalario(resultSet.getDouble("salario"));
+                empleado.setFechaContratacion(resultSet.getDate("fechaContratacion").toLocalDate());
+                empleado.setEstado(resultSet.getString("estado"));
+                this.empleado.add(empleado);
+            }
+            mostrarAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Carga de Datos",
+                    "Datos Cargados Correctamente",
+                    "Se han cargado los datos de la base de datos correctamente."
+            );
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+
+    public void clickConsulta4(ActionEvent actionEvent) {
+        empleado.clear();
+        String sql = "SELECT * FROM empleado ORDER BY salario ASC";
+        try(
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+        ){
+            while(resultSet.next()){
+                Empleado empleado = new Empleado();
+                empleado.setId(resultSet.getInt("id"));
+                empleado.setNombres(resultSet.getString("nombres"));
+                empleado.setApellidos(resultSet.getString("apellidos"));
+                empleado.setCedula(resultSet.getString("cedula"));
+                empleado.setCorreo(resultSet.getString("correo"));
+                empleado.setTelefono(resultSet.getString("telefono"));
+                empleado.setCargo(resultSet.getString("cargo"));
+                empleado.setDepartamento(resultSet.getString("departamento"));
+                empleado.setSalario(resultSet.getDouble("salario"));
+                empleado.setFechaContratacion(resultSet.getDate("fechaContratacion").toLocalDate());
+                empleado.setEstado(resultSet.getString("estado"));
+                this.empleado.add(empleado);
+            }
+            mostrarAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Carga de Datos",
+                    "Datos Cargados Correctamente",
+                    "Se han cargado los datos de la base de datos correctamente."
+            );
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void clickConsulta5(ActionEvent actionEvent) {
+        empleado.clear();
+        String sql = "SELECT * FROM empleado ORDER BY apellidos ASC";
+        try(
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+        ){
+            while(resultSet.next()){
+                Empleado empleado = new Empleado();
+                empleado.setId(resultSet.getInt("id"));
+                empleado.setNombres(resultSet.getString("nombres"));
+                empleado.setApellidos(resultSet.getString("apellidos"));
+                empleado.setCedula(resultSet.getString("cedula"));
+                empleado.setCorreo(resultSet.getString("correo"));
+                empleado.setTelefono(resultSet.getString("telefono"));
+                empleado.setCargo(resultSet.getString("cargo"));
+                empleado.setDepartamento(resultSet.getString("departamento"));
+                empleado.setSalario(resultSet.getDouble("salario"));
+                empleado.setFechaContratacion(resultSet.getDate("fechaContratacion").toLocalDate());
+                empleado.setEstado(resultSet.getString("estado"));
+                this.empleado.add(empleado);
+            }
+            mostrarAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Carga de Datos",
+                    "Datos Cargados Correctamente",
+                    "Se han cargado los datos de la base de datos correctamente."
+            );
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
 }
 
 
