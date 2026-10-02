@@ -161,6 +161,38 @@ public class RegistroEmpleadoController {
             ex.printStackTrace();
         }
     }
+
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String encabezado, String mensaje){
+
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(encabezado);
+        alert.setContentText(mensaje);
+
+    }
+
+    @FXML
+    private boolean validarFormulario() {
+
+        if (txtNombres.getText().isEmpty() || txtApellidos.getText().isEmpty() || txtCedula.getText().isEmpty() || txtCorreo.getText().isEmpty()
+                || cmbDepartamento.getValue() == null || txtTelefono.getText().isEmpty() || txtSalario.getText().isEmpty() || cmbCargo.getValue() == null || cmbEstado.getValue() == null)
+        {
+
+            mostrarAlerta(
+                    Alert.AlertType.WARNING,
+                    "Registro Incompleto",
+                    "Datos Faltantes del registro",
+                    "Le faltan campos por llenar.\nPor favor, verifique de nuevo."
+            );
+
+            return false;
+        }
+
+        return true;
+    }
+
+
 }
 
 
