@@ -68,7 +68,7 @@
             <TableColumn fx:id="colCargo" prefWidth="97.60003662109375" text="Cargo" />
             <TableColumn fx:id="colDepartamento" prefWidth="96.79998779296875" text="Departamento" />
             <TableColumn fx:id="colSalario" prefWidth="96.800048828125" text="Salario" />
-            <TableColumn fx:id="colFecchaContratacion" prefWidth="85.5999755859375" text="Fecha de contratación" />
+            <TableColumn fx:id="colFechaContratacion" prefWidth="85.5999755859375" text="Fecha de contratación" />
             <TableColumn fx:id="colEstado" prefWidth="76.0" text="Estado" />
         </columns>
       </TableView>

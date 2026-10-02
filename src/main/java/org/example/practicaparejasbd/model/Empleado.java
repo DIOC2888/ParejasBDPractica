@@ -1,51 +1,40 @@
 package org.example.practicaparejasbd.model;
 
-import javafx.scene.control.DatePicker;
+import java.time.LocalDate;
 
 public class Empleado {
+
     private int id;
     private String nombres;
-    private String appllidos;
-    private String cedula, correo, departamento;
-    private int telefono;
+    private String apellidos;
+    private String cedula;
+    private String correo;
+    private String telefono;
     private String cargo;
+    private String departamento;
     private Double salario;
-    private DatePicker fecha_contratacion;
+    private LocalDate fechaContratacion;
     private String estado;
 
-
-    public Empleado(){
-
+    public Empleado() {
     }
 
-    public Empleado(int id, String nombres, String appllidos, String cedula, String correo, String departamento, int telefono, String cargo, Double salario, DatePicker fecha_contratacion, String estado) {
+    public Empleado(int id, String nombres, String apellidos,
+                    String cedula, String correo, String telefono,
+                    String cargo, String departamento, Double salario,
+                    LocalDate fechaContratacion, String estado) {
+
         this.id = id;
         this.nombres = nombres;
-        this.appllidos = appllidos;
+        this.apellidos = apellidos;
         this.cedula = cedula;
         this.correo = correo;
+        this.telefono = telefono;
+        this.cargo = cargo;
         this.departamento = departamento;
-        this.telefono = telefono;
-        this.cargo = cargo;
         this.salario = salario;
-        this.fecha_contratacion = fecha_contratacion;
+        this.fechaContratacion = fechaContratacion;
         this.estado = estado;
-    }
-
-    public int getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
     }
 
     public int getId() {
@@ -64,12 +53,12 @@ public class Empleado {
         this.nombres = nombres;
     }
 
-    public String getAppllidos() {
-        return appllidos;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setAppllidos(String appllidos) {
-        this.appllidos = appllidos;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getCedula() {
@@ -88,6 +77,22 @@ public class Empleado {
         this.correo = correo;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
     public String getDepartamento() {
         return departamento;
     }
@@ -104,12 +109,12 @@ public class Empleado {
         this.salario = salario;
     }
 
-    public DatePicker getFecha_contratacion() {
-        return fecha_contratacion;
+    public LocalDate getFechaContratacion() {
+        return fechaContratacion;
     }
 
-    public void setFecha_contratacion(DatePicker fecha_contratacion) {
-        this.fecha_contratacion = fecha_contratacion;
+    public void setFechaContratacion(LocalDate fechaContratacion) {
+        this.fechaContratacion = fechaContratacion;
     }
 
     public String getEstado() {

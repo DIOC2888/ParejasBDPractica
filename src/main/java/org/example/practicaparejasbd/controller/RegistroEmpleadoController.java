@@ -7,7 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.practicaparejasbd.model.Empleado;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class RegistroEmpleadoController {
+
     @FXML
     private TextField txtNombres;
     @FXML
@@ -38,6 +42,8 @@ public class RegistroEmpleadoController {
     @FXML
     private TableView<Empleado> tblEmpleado;
     @FXML
+    private TableColumn<Empleado, Integer> colID;
+    @FXML
     private TableColumn<Empleado, String> colNombres;
     @FXML
     private TableColumn<Empleado, String> colApellidos;
@@ -54,7 +60,7 @@ public class RegistroEmpleadoController {
     @FXML
     private TableColumn<Empleado, Double> colSalario;
     @FXML
-    private TableColumn<Empleado, String> colFechaContratacion;
+    private TableColumn<Empleado, LocalDate> colFechaContratacion;
     @FXML
     private TableColumn<Empleado, String> colEstado;
 
@@ -75,6 +81,7 @@ public class RegistroEmpleadoController {
 
 
     public void configurarTable(){
+        colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombres.setCellValueFactory(new PropertyValueFactory<>("nombres"));
         colApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
         colCedula.setCellValueFactory(new PropertyValueFactory<>("cedula"));
@@ -89,6 +96,22 @@ public class RegistroEmpleadoController {
 
 
     public void clickGuardar(ActionEvent actionEvent) {
+            Empleado nuevoEmpleado = new Empleado(
+                    0,
+                    txtNombres.getText(),
+                    txtApellidos.getText(),
+                    txtCedula.getText(),
+                    txtCorreo.getText(),
+                    txtTelefono.getText(),
+                    cmbCargo.getValue(),
+                    txtDepartamento.getText(),
+                    Double.parseDouble(txtSalario.getText()),
+                    dtpFechaContratacion.getValue(),
+                    cmbEstado.getValue()
+            );
+
+            empleado.add(nuevoEmpleado);
+
     }
 
     public void clickLimpiar(ActionEvent actionEvent) {
