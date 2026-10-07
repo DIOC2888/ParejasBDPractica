@@ -18,7 +18,7 @@
 
         <Label layoutX="417.0" layoutY="22.0" styleClass="titulo-formulario" text="Registro de Empleados" />
 
-        <GridPane layoutX="184.0" layoutY="80.0" prefHeight="294.0" prefWidth="491.0">
+        <GridPane layoutX="183.0" layoutY="57.0" prefHeight="294.0" prefWidth="491.0">
 
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.79998779296875" minWidth="0.0" prefWidth="90.40003662109376" />
@@ -127,6 +127,8 @@
       <Button fx:id="btnConsulta4" layoutX="907.0" layoutY="204.0" mnemonicParsing="false" onAction="#clickConsulta4" text="Salarios ascendente 👁" />
       <Button fx:id="btnConsulta5" layoutX="910.0" layoutY="257.0" mnemonicParsing="false" onAction="#clickConsulta5" text="Nombres alfabeticos 👁" />
       <Label layoutX="919.0" layoutY="22.0" styleClass="titulo-formulario" text="Consultas:" />
+      <Button fx:id="btnEliminar" layoutX="22.0" layoutY="368.0" mnemonicParsing="false" onAction="#clickEliminar" text="Eliminar" />
+      <Button fx:id="btnActualizar" layoutX="130.0" layoutY="368.0" mnemonicParsing="false" onAction="#clickActualizar" text="Actualizar" />
 
     </children>
 </AnchorPane>

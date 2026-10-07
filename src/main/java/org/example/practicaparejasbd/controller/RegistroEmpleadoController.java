@@ -78,6 +78,26 @@ public class RegistroEmpleadoController {
                 "Tecnología",
                 "Marketing"
         );
+
+
+        tblEmpleado.getSelectionModel().selectedItemProperty().
+                addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        cargarEmpleadoSeleccionado(newValue);
+                    }
+                });
+    }
+    private void cargarEmpleadoSeleccionado(Empleado empleado) {
+        txtNombres.setText(empleado.getNombres());
+        txtApellidos.setText(empleado.getApellidos());
+        txtCedula.setText(empleado.getCedula());
+        txtCorreo.setText(empleado.getCorreo());
+        txtTelefono.setText(empleado.getTelefono());
+        cmbCargo.setValue(empleado.getCargo());
+        cmbDepartamento.setValue(empleado.getDepartamento());
+        txtSalario.setText(String.valueOf(empleado.getSalario()));
+        dtpFechaContratacion.setValue(empleado.getFechaContratacion());
+        cmbEstado.setValue(empleado.getEstado());
     }
 
 
@@ -127,7 +147,7 @@ public class RegistroEmpleadoController {
 
     }
 
-    public void clickLimpiar(ActionEvent actionEvent) {
+    public void clickLimpiar() {
         txtNombres.clear();
         txtApellidos.clear();
         txtCedula.clear();
@@ -140,7 +160,7 @@ public class RegistroEmpleadoController {
         dtpFechaContratacion.setValue(null);
     }
 
-    public void clickCargar(ActionEvent actionEvent) {
+    public void clickCargar() {
         empleado.clear();
         String sql = "SELECT * FROM empleado";
 
@@ -390,6 +410,124 @@ public class RegistroEmpleadoController {
         }catch (SQLException ex){
             ex.printStackTrace();
         }
+    }
+    private boolean validarCampos() {
+        return true;
+    }
+
+    public void clickEliminar(ActionEvent actionEvent) {
+        Empleado empleadoSeleccionado = tblEmpleado.getSelectionModel().getSelectedItem();
+        if (empleadoSeleccionado == null) {
+            mostrarAlerta(Alert.AlertType.WARNING,
+                    "Advertencia",
+                    "No hay empleado seleccionado",
+                    "Por favor seleccione un empleado de la tabla para eliminarlo");
+
+        }
+        if(!validarCampos()){
+            return;
+        }
+
+
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Eliminar");
+        confirmacion.setHeaderText("Confirmar eliminación");
+        confirmacion.setContentText("¿Está seguro de eliminar el empleado seleccionado?");
+        if(confirmacion.showAndWait().isEmpty() || confirmacion.getResult() != ButtonType.OK){
+            return;
+        }
+
+
+        String sql = "DELETE FROM empleado WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setInt(1, empleadoSeleccionado.getId());
+            statement.execute();
+            clickCargar();
+            clickLimpiar();
+            int filasEliminadas = statement.getUpdateCount();
+            if (filasEliminadas > 0) {
+                mostrarAlerta(Alert.AlertType.INFORMATION,
+                        "Registro eliminado",
+                        "Empleado eliminado",
+                        "El empleado se ha eliminado exitosamente");
+                return;
+            }
+            empleado.remove(empleadoSeleccionado);
+
+            mostrarAlerta(Alert.AlertType.INFORMATION,
+                    "Empleado eliminado",
+                    "Empleado eliminado",
+                    "El empleado se ha eliminado exitosamente");
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void clickActualizar(ActionEvent actionEvent) {
+        Empleado empleadoSeleccionado = tblEmpleado.getSelectionModel().getSelectedItem();
+        if (empleadoSeleccionado == null) {
+            mostrarAlerta(Alert.AlertType.WARNING,
+                    "Advertencia",
+                    "No hay empleado seleccionado",
+                    "Por favor seleccione un empleado de la tabla para actualizarlo");
+
+        }
+        if(!validarCampos()){
+            return;
+        }
+
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Actualizar");
+        confirmacion.setHeaderText("Confirmar actualización");
+        confirmacion.setContentText("¿Está seguro de actualizar el empleado seleccionado?");
+        if(confirmacion.showAndWait().isEmpty() || confirmacion.getResult() != ButtonType.OK){
+            return;
+        }
+
+
+        String sql = "UPDATE empleado SET nombres = ?, apellidos = ?, cedula = ?, correo = ?, telefono = ?, cargo = ?, departamento = ?, salario = ?, fechaContratacion = ?, estado = ? WHERE id = ?";;
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, txtNombres.getText());
+            statement.setString(2, txtApellidos.getText());
+            statement.setString(3, txtCedula.getText());
+            statement.setString(4, txtCorreo.getText());
+            statement.setString(5, txtTelefono.getText());
+            statement.setString(6, cmbCargo.getValue());
+            statement.setString(7, cmbDepartamento.getValue());
+            statement.setDouble(8, Double.parseDouble(txtSalario.getText()));
+            statement.setDate(9, Date.valueOf(dtpFechaContratacion.getValue()));
+            statement.setString(10, cmbEstado.getValue());
+            statement.setInt(11, empleadoSeleccionado.getId());
+            statement.execute();
+            clickCargar();
+            clickLimpiar();
+
+            int filasActualizadas = statement.getUpdateCount();
+            if (filasActualizadas > 0) {
+                mostrarAlerta(Alert.AlertType.INFORMATION,
+                        "Registro actualizado",
+                        "Empleado actualizado",
+                        "El empleado se ha actualizado exitosamente");
+                return;
+            }
+            empleado.remove(empleadoSeleccionado);
+
+            mostrarAlerta(Alert.AlertType.INFORMATION,
+                    "Registro actualizado",
+                    "Empleado actualizado",
+                    "El empleado se ha actualizado exitosamente");
+
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
 
